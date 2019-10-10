@@ -55,6 +55,8 @@ app.use("/api/private/v1/login",admin_passport.login);
 // // 设置 passport 验证路径
 app.use("/api/private/v1/*",admin_passport.tokenAuth);
 
+console.log(1);
+console.log(2);
 
 /**
  *
