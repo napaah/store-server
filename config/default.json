@@ -1,0 +1,28 @@
+{
+	"config_name" : "develop",
+	"jwt_config" : {
+		"secretKey":"store",
+		"expiresIn":86400
+	},
+	"upload_config":{
+		"baseURL":"http://127.0.0.1:3006",
+		"upload_ueditor":"uploads/ueditor",
+		"simple_upload_redirect":"http://127.0.0.1/reload"
+	},
+	"db_config" : {
+		"protocol" : "mysql",
+		"host" : "127.0.0.1",
+		"database" : "test2",
+		"user" : "root",
+		"password" : "root",
+		"port" : 3006,
+		"dialect": "mysql",
+
+		"pool": {
+			"max": 5,
+			"min": 0,
+			"acquire": 30000,
+			"idle": 10000
+		}	
+	}
+}
