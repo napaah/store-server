@@ -8,7 +8,7 @@ store对应后台
 - `models` 存放具体数据库 ORM 模型文件
 - `modules` 当前项目模块
   - `authorization.js` API权限验证模块
-  - `database.js` 数据库模块（数据库加载基于 nodejs-orm2 库加载）
+  - `database.js` 数据库模块（数据库加载基于 sequelize 库加载）
   - `passport.js` 基于 passport 模块的登录搭建
   - `resextra.js` API 统一返回结果接口
 - `node_modules` 项目依赖的第三方模块
