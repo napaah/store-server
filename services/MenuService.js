@@ -41,7 +41,6 @@ module.exports.bulkCreateMenu = (params, cb)=> {
 module.exports.getLeftMenus = function(userInfo,cb) {
   console.log(userInfo,'userinfo')
 	if(!userInfo) return cb("无权限访问");
-  console.log(111)
 	
 	var authFn = function(rid,keyRolePermissions,cb) {
 		permissionAPIDAO.findAllList(function(err,permissions){

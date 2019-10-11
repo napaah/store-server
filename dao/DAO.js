@@ -2,7 +2,8 @@ var path = require("path");
 
 // 获取数据库模型
 const db = require(path.join(process.cwd(),"modules/database")); 
-
+const Op = db.Op;
+console.log(Op);
 
 /**
  * 创建对象数据
@@ -44,6 +45,76 @@ module.exports.bulkCreate = async (modelName,arr,cb)=> {
   } catch (error) {
     cb(error)
   }
+}
+
+
+/**
+ * 获取所有数据
+ * @param  {[type]}   modelName  模型名称
+ * @param  {[数组]}   conditions  条件集合
+ * @param  {Function} cb         回调函数
+ */
+module.exports.findAll = async function(modelName,conditions,cb) {
+  const Model = require(path.join(process.cwd(),"models/") + modelName)
+	if(!Model) return cb(Model+ "模型不存在",null);
+
+	if(!conditions) return  cb("条件为空",null);
+  
+  try {
+    const result = await Model.findAll({
+      // offset: start, // 前端分页组件传来的起始偏移量
+      // limit: Number(pageSize), // 前端分页组件传来的一页显示多少条
+    })
+    cb(null, result)
+  } catch (error) {
+    console.log(error)
+    cb(error)
+  }
+
+}
+
+
+/**
+ * 获取数据数量
+ * 分页
+ * 模糊查询
+ * @param  {[type]}   modelName  模型名称
+ * @param  {[数组]}   conditions  条件集合
+ * @param  {Function} cb         回调函数
+ */
+module.exports.findAndCountAll = async function(modelName,conditions,cb) {
+  if(!conditions.pagenum) return cb("pagenum 参数不合法");
+	if(!conditions.pagesize) return cb("pagesize 参数不合法");
+  const { query = '', pagesize, pagenum } = conditions
+  const Model = require(path.join(process.cwd(),"models/") + modelName)
+	if(!Model) return cb(Model+ "模型不存在",null);
+
+	if(!conditions) return  cb("条件为空",null);
+  
+  try {
+    let result = {}
+      result = await Model.findAndCountAll({
+        offset: pagesize * (pagenum-1), // 前端分页组件传来的起始偏移量
+        limit: Number(pagesize), // 前端分页组件传来的一页显示多少条
+        order: [
+          ['createdAt', 'DESC'],
+        ],
+        where: {
+          'mg_name': {
+            [Op.like]: `%${query}%`
+          }
+          
+        }
+      })
+    // console.log(result.rows[0].mg_name,'result')
+    result.pagenum = pagenum
+    result.pagesize = pagesize
+    cb(null, result)
+  } catch (error) {
+    console.log(error)
+    cb(error)
+  }
+
 }
 
 

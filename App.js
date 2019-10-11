@@ -44,7 +44,15 @@ db.initialize(app, (err, result)=> {
   console.log(result)
 })
 
+/**
+ *
+ *	后台管理系统初始化
+ * 
+ */
+// 获取管理员逻辑模块
 var managerService = require(path.join(process.cwd(),"services/ManagerService"));
+// 获取角色服务模块
+var roleService = require(path.join(process.cwd(),"services/RoleService"));
 
 // 初始化 后台登录 passport 策略
 admin_passport = require('./modules/passport');
@@ -55,8 +63,19 @@ app.use("/api/private/v1/login",admin_passport.login);
 // // 设置 passport 验证路径
 app.use("/api/private/v1/*",admin_passport.tokenAuth);
 
-console.log(1);
-console.log(2);
+
+// 获取验证模块
+var authorization = require(path.join(process.cwd(),"/modules/authorization"));
+
+// 设置全局权限
+authorization.setAuthFn(function(req,res,next,serviceName,actionName,passFn) {
+  
+	if(!req.userInfo || isNaN(parseInt(req.userInfo.rid))) return res.sendResult("无角色ID分配");
+	// 验证权限
+	roleService.authRight(req.userInfo.rid,serviceName,actionName,function(err,pass) {
+		passFn(pass);
+	});
+});
 
 /**
  *

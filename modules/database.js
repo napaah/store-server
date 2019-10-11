@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const uuidv1 = require('uuid/v1');
 const path = require('path');
 const fs = require('fs');
+const Op = Sequelize.Op;
 // 获取连接数据库配置
 const config = require('config').get('db_config')
 let { database, user, password, host, dialect, pool } = config;
@@ -122,6 +123,7 @@ for (let type of TYPES) {
 }
 
 exp.ID = ID_TYPE;
+exp.Op = Op;
 exp.generateId = generateId;
 
 module.exports = exp;

@@ -14,6 +14,17 @@ module.exports.create = function(obj,cb) {
 
 
 /**
+ * 通过查询条件获取所有管理员
+ * 
+ * @param  {[type]}   conditions 管理员信息
+ * @param  {Function} cb  回调函数
+ */
+module.exports.getAllManagers = function(conditions,cb) {
+	daoModule.findAndCountAll("ManagerModel",conditions,cb);
+}
+
+
+/**
  * 通过查询条件获取管理员对象
  * 
  * @param  {[type]}   conditions 条件
