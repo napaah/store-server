@@ -23,6 +23,7 @@ module.exports.findAllList = async (cb)=> {
       include: [{ // include关键字表示关联查询
           model: PermissionApiModel, // 指定关联的model
           attributes: [['ps_api_path','path'], ['ps_api_order', 'order']], // 这里的attributes属性表示查询class表的name和rank字段，其中对name字段起了别名className
+          // attributes: { exclude: ['createdAt', 'updatedAt', 'version'] } // 这里的attributes属性表示排除指定的字段
       }],
       raw:true // 这个属性表示开启原生查询，原生查询支持的功能更多，自定义更强
     })

@@ -78,7 +78,7 @@ module.exports.updateManager = function(idObj,paramsObj, cb) {
  */
 module.exports.updateMgrState = function(idObj,paramsObj, cb) {
 	managersDAO.update(idObj, paramsObj, function(err){
-		if(err) return cb("修改状态失败");
+		if(err) return cb("修改失败");
 		cb(null);
 	});
 }
@@ -109,6 +109,7 @@ module.exports.getAllManagers = function(conditions,cb) {
 			retManagers.push({
 				"id": manager.mg_id,
 				"username":manager.mg_name,
+				"role_id": manager.role_id,
 				"createTime":manager.createdAt,
 				"updatedTime":manager.updatedAt,
 				"mobile":manager.mg_mobile,

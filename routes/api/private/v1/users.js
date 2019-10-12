@@ -114,9 +114,9 @@ router.put("/state",
 			return res.sendResult(null,400,"用户ID不能为空");
 		}
 
-		 if(!req.body.state) {
-		 	return res.sendResult(null,400,"状态不能为空");
-		 }
+		// if(!req.body.state) {
+		// return res.sendResult(null,400,"状态不能为空");
+		// }
 
 		next();
 	},
@@ -137,7 +137,39 @@ router.put("/state",
 			res.sendResult(manager,200,"设置状态成功");
 		})(req,res,next);
 	}
-	)
+)
+
+
+// 修改用户状态
+router.put("/role",
+	// 参数验证
+	function(req,res,next) {
+		if(!req.body.id) {
+			return res.sendResult(null,400,"用户ID不能为空");
+		}
+
+		 if(!req.body.roleId) {
+		 	return res.sendResult(null,400,"状态不能为空");
+		 }
+
+		next();
+	},
+	// 处理业务逻辑
+	function(req,res,next) {
+		
+		let idObj = {
+			mg_id: req.body.id
+		};
+		
+		let paramsObj = {
+			role_id: req.body.roleId
+		}
+		mgrServ.updateMgrState(idObj,paramsObj,function(err,manager){
+			if(err) return res.sendResult(null,400,err);
+			res.sendResult(manager,200,"修改角色成功");
+		})(req,res,next);
+	}
+)
 
 module.exports = router;
 

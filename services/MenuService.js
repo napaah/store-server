@@ -39,11 +39,12 @@ module.exports.bulkCreateMenu = (params, cb)=> {
  * @param  {Function} cb 回调函数
  */
 module.exports.getLeftMenus = function(userInfo,cb) {
-  console.log(userInfo,'userinfo')
 	if(!userInfo) return cb("无权限访问");
 	
 	var authFn = function(rid,keyRolePermissions,cb) {
+		
 		permissionAPIDAO.findAllList(function(err,permissions){
+			
       if(err) return cb("获取权限数据失败");
       // var keyPermissions = _.keyBy(permissions,'ps_id');
       var rootPermissionsResult = {};

@@ -54,6 +54,7 @@ module.exports.bulkCreate = async (modelName,arr,cb)=> {
  * @param  {Function} cb         回调函数
  */
 module.exports.findAll = async function(modelName,conditions,cb) {
+  
   const Model = require(path.join(process.cwd(),"models/") + modelName)
 	if(!Model) return cb(Model+ "模型不存在",null);
 

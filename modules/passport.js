@@ -73,7 +73,6 @@ module.exports.login = function(req,res,next) {
  */
 module.exports.tokenAuth = function(req,res,next) {
 	passport.authenticate('jwt', { session: false },function(err,tokenData) {
-    console.log(tokenData,'tokenData')
 		if(err) return res.sendResult(null,400,err);
 		if(!tokenData) return res.sendResult(null,400,'无效token');
 		req.userInfo = {};
