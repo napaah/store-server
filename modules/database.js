@@ -85,9 +85,10 @@ function defineModel(name, attributes) {
       tableName: name,
       timestamps: false,
       hooks: {
-        beforeValidate: function (obj) {
+        beforeValidate: function (obj, options) {
           let now = Date.now();
-          if (obj.isNewRecord) {
+          if (options.returning) {  // 判断是否是新纪录
+            
             // if (!obj.mg_id) {
             //   obj.mg_id = generateId();
             // }
@@ -95,6 +96,7 @@ function defineModel(name, attributes) {
             obj.updatedAt = now;
             obj.version = 0;
           } else {
+            
             obj.updatedAt = Date.now();
             obj.version++;
           }

@@ -17,7 +17,6 @@ module.exports.createManager = function(params,cb) {
 	// 	if(isExists) {
 	// 		return cb("用户名已存在");
 	// 	}
-
 		managersDAO.create({
 			"mg_id": db.generateId(),
 			"mg_name":params.username,
@@ -25,7 +24,7 @@ module.exports.createManager = function(params,cb) {
 			"mg_mobile":params.mobile,
 			"mg_email":params.email,
       "role_id":params.rid,
-      "mg_state": params.state
+      "mg_state": 0
 		},function(err,manager){
 			if(err) return cb("创建失败");
 			result = {
@@ -34,13 +33,55 @@ module.exports.createManager = function(params,cb) {
 				"mobile" : manager.mg_mobile,
 				"email" : manager.mg_email,
 				"role_id" : manager.role_id,
-				"create_time":manager.mg_time
+				"createTime":manager.createdAt,
+				"updatedTime":manager.updatedAt,
+				"version": manager.version
 			};
 			cb(null,result);
 		});
 	// });
 }
 
+
+/**
+ * 通过管理员 ID 进行删除操作
+ * 
+ * @param  {[type]}   id 管理员ID
+ * @param  {Function} cb 回调函数
+ */
+module.exports.deleteManager = function(idObj,cb) {
+	managersDAO.destroy(idObj,function(err){
+		if(err) return cb("删除失败");
+		cb(null);
+	});
+}
+
+
+/**
+ * 通过管理员 ID 进行修改操作
+ * 
+ * @param  {[type]}   id 管理员ID
+ * @param  {Function} cb 回调函数
+ */
+module.exports.updateManager = function(idObj,paramsObj, cb) {
+	managersDAO.update(idObj, paramsObj, function(err){
+		if(err) return cb("修改失败");
+		cb(null);
+	});
+}
+
+/**
+ * 通过管理员 ID 修改用户状态操作
+ * 
+ * @param  {[type]}   id 管理员ID
+ * @param  {Function} cb 回调函数
+ */
+module.exports.updateMgrState = function(idObj,paramsObj, cb) {
+	managersDAO.update(idObj, paramsObj, function(err){
+		if(err) return cb("修改状态失败");
+		cb(null);
+	});
+}
 
 /**
  * 获取所有管理员
